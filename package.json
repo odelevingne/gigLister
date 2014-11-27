@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/odelevingne/gigLister/issues"
   },
-  "homepage": "https://github.com/odelevingne/gigLister"
+  "homepage": "https://github.com/odelevingne/gigLister",
+  "devDependencies": {
+    "httpster": "^1.0.0"
+  }
 }
