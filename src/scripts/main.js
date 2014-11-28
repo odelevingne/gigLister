@@ -28,19 +28,18 @@ $(document).ready(function(){
   };
 
   var createArtistList = function(artists) {
-    $.each(artists, function(i, item){
+    var bestMatches = artists.slice(0,5)
+
+    $.each(bestMatches, function(i, item){
 
       var artistName = artists[i].displayName
       var artistUri = artists[i].uri
-      
-      var list = "<li>" + (artistName) + "</li>";
+
+      var list = "<li> <a href='" + (artistUri) + "'>" + (artistName) + "</li>";
 
       $('#artist-results').append(list);
 
     });
-
-    // Loop over artists
-    // Put them in the DOM
     console.log(artists);
   };
 
