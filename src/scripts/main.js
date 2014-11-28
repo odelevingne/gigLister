@@ -28,9 +28,20 @@ $(document).ready(function(){
   };
 
   var createArtistList = function(artists) {
+    $.each(artists, function(i, item){
+
+      var artistName = artists[i].displayName
+      var artistUri = artists[i].uri
+      
+      var list = "<li>" + (artistName) + "</li>";
+
+      $('#artist-results').append(list);
+
+    });
+
     // Loop over artists
     // Put them in the DOM
-    console.table(artists, ["displayName"]);
+    console.log(artists);
   };
 
   $searchArtistForm.on("submit", function(event){
