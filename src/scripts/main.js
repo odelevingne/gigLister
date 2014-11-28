@@ -1,20 +1,50 @@
 $(document).ready(function(){
 
+  var SONG_KICK_API_KEY = "8y5HTUEItSCdxL0v";
+
   var $searchArtistForm = $("#search-artist-form");
   var $searchArtistName = $("#search-artist-name");
   var $searchTerm = $("#search-term");
-  var artistName;
+
+  var searchSongKick = function(artistName) {
+    $.ajax({
+      type: "GET",
+      url: "http://api.songkick.com/api/3.0/search/artists.json",
+      data: {
+        query: artistName,
+        apikey: SONG_KICK_API_KEY
+      },
+      success: function(resp) {
+        console.info("success!!!!!", resp);
+        // Display results in a list somewhere
+
+        createArtistList(resp.resultsPage.results.artist);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.error("NOOOO!!!!", jqXHR, textStatus, errorThrown);
+        // Display and error
+      }
+    });
+  };
+
+  var createArtistList = function(artists) {
+    // Loop over artists
+    // Put them in the DOM
+    console.table(artists, ["displayName"]);
+  };
 
   $searchArtistForm.on("submit", function(event){
     event.preventDefault();
 
-    artistName = $searchArtistName.val();
+    var artistName = $searchArtistName.val();
     $searchTerm.html(artistName);
-    
-    console.info("Searched for", artistName);
-  });
-   
 
+    console.info("Searched for", artistName);
+
+    searchSongKick(artistName);
+    
+  });
+  
 
 });
 
