@@ -30,14 +30,12 @@ $(document).ready(function(){
   var createArtistList = function(artists) {
     var bestMatches = artists.slice(0,5)
 
+    var template = "<li> {{displayName}} </li>";
+
     $.each(bestMatches, function(i, item){
 
-      var artistName = artists[i].displayName
-      var artistUri = artists[i].uri
-
-      var list = "<li> <a href='" + (artistUri) + "'>" + (artistName) + "</li>";
-
-      $('#artist-results').append(list);
+      var renderedArtists = Mustache.render(template, item)
+      $('#artist-results').append(renderedArtists);
 
     });
     console.log(artists);
