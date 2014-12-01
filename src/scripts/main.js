@@ -35,20 +35,43 @@ $(document).ready(function(){
     $.each(bestMatches, function(i, item){
       var artistId = bestMatches[i].id
       var renderedArtists = Mustache.render(artistTemplate, item);
+      var $href = $("#confirm-artist").attr('href');
 
       $('#artist-results').append(renderedArtists);
 
       $('#confirm-artist').on("click", function(event) {
         event.preventDefault();
-        getArtistCalender(href);
+        getArtistCalender($href);
 
       }); 
-
-      var href = $("#confirm-artist").attr('href');
-
-
     });
     console.log(artists);
+  };
+
+  getArtistCalender = function(href){
+    $.ajax({
+      type: 'GET',
+      url: "http://api.songkick.com/api/3.0/artists/"+href+"/calendar.json?apikey=",
+      data: {
+        apikey: SONG_KICK_API_KEY
+      },
+      success: function(resp) {
+        console.log(resp.resultsPage.results.event);
+        createArtistGigListings(resp.resultsPage.results.event);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.error("Nooo!!", jqXHR, textStatus, errorThrown);
+      }
+    });
+  }; 
+
+  var createArtistGigListings = function(listings){
+    var listingTemplate = "<li> <a href='{{uri}}'> {{displayName}} </a></li>" // {{location}}{{city}}{{/location}} {{start}}{{date}}{{/start}} {{uri}}
+
+    $.each(listings, function(i, item){
+      var renderedGigs = Mustache.render(listingTemplate, item);
+      $("#gig-listing").append(renderedGigs);
+    });
   };
 
 
@@ -63,22 +86,6 @@ $(document).ready(function(){
     searchSongKick(artistName);
     
   });
-
-  getArtistCalender = function(href){
-    $.ajax({
-      type: 'GET',
-      url: "http://api.songkick.com/api/3.0/artists/"+href+"/calendar.json?apikey=",
-      data: {
-        apikey: SONG_KICK_API_KEY
-      },
-      success: function(resp) {
-        console.log(resp.resultsPage.results.event);
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.error("Nooo!!", jqXHR, textStatus, errorThrown);
-      }
-    });
-  };
 
 });
 
