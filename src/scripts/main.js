@@ -16,13 +16,11 @@ $(document).ready(function(){
       },
       success: function(resp) {
         console.info("success!!!!!", resp);
-        // Display results in a list somewhere
-
         createArtistList(resp.resultsPage.results.artist);
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.error("NOOOO!!!!", jqXHR, textStatus, errorThrown);
-        // Display and error
+        // Display an error
       }
     });
   };
@@ -30,44 +28,43 @@ $(document).ready(function(){
   var createArtistList = function(artists) {
     var bestMatches = artists.slice(0,5)
 
-    var artistTemplate = "<li> <a href='{{id}}' id='confirm-artist'> {{displayName}} </a> </li>";
+    var artistTemplate = "<li> <a href='{{id}}' class='confirm-artist'> {{displayName}} </a> </li>";
 
     $.each(bestMatches, function(i, item){
       var artistId = bestMatches[i].id
       var renderedArtists = Mustache.render(artistTemplate, item);
-      var $href = $("#confirm-artist").attr('href');
 
       $('#artist-results').append(renderedArtists);
-
-      $('#confirm-artist').on("click", function(event) {
-        event.preventDefault();
-        getArtistCalender($href);
-
-      }); 
     });
-    console.log(artists);
+
+    $('.confirm-artist').on("click", function(event) {
+      event.preventDefault();
+      var $clickedArtist = $(event.currentTarget);
+      var href = $clickedArtist.attr('href');
+      getArtistCalender(href);
+    });
   };
 
   getArtistCalender = function(href){
     $.ajax({
       type: 'GET',
-      url: "http://api.songkick.com/api/3.0/artists/"+href+"/calendar.json?apikey=",
+      url: "http://api.songkick.com/api/3.0/artists/"+href+"/calendar.json",
       data: {
         apikey: SONG_KICK_API_KEY
       },
       success: function(resp) {
-        console.log(resp.resultsPage.results.event);
         createArtistGigListings(resp.resultsPage.results.event);
+        $('#artist-results-div').fadeOut()
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.error("Nooo!!", jqXHR, textStatus, errorThrown);
+        // Display an error
       }
     });
   }; 
 
   var createArtistGigListings = function(listings){
-    var listingTemplate = "<li> <a href='{{uri}}'> {{displayName}} </a></li>" // {{location}}{{city}}{{/location}} {{start}}{{date}}{{/start}} {{uri}}
-
+    var listingTemplate = "<li> <a href='{{uri}}'> {{displayName}} </a></li>" 
     $.each(listings, function(i, item){
       var renderedGigs = Mustache.render(listingTemplate, item);
       $("#gig-listing").append(renderedGigs);
