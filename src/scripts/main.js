@@ -28,7 +28,7 @@ $(document).ready(function(){
   var createArtistList = function(artists) {
     var bestMatches = artists.slice(0,5)
 
-    var artistTemplate = "<li> <a href='{{id}}' class='confirm-artist'> {{displayName}} </a> </li>";
+    var artistTemplate = "<li> <a data-artist-id='{{id}}' class='confirm-artist'> {{displayName}} </a> </li>";
 
     $.each(bestMatches, function(i, item){
       var artistId = bestMatches[i].id
@@ -40,15 +40,15 @@ $(document).ready(function(){
     $('.confirm-artist').on("click", function(event) {
       event.preventDefault();
       var $clickedArtist = $(event.currentTarget);
-      var href = $clickedArtist.attr('href');
-      getArtistCalender(href);
+      var artistID = $clickedArtist.data('artist-id');
+      getArtistCalender(artistID);
     });
   };
 
-  getArtistCalender = function(href){
+  var getArtistCalender = function(artistID){
     $.ajax({
       type: 'GET',
-      url: "http://api.songkick.com/api/3.0/artists/"+href+"/calendar.json",
+      url: "http://api.songkick.com/api/3.0/artists/"+artistID+"/calendar.json",
       data: {
         apikey: SONG_KICK_API_KEY
       },
