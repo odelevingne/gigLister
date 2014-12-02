@@ -17,8 +17,13 @@ $(document).ready(function(){
         apikey: SONG_KICK_API_KEY
       },
       success: function(resp) {
-        console.info("success!!!!!", resp);
-        createArtistList(resp.resultsPage.results.artist);
+        if (typeof resp.resultsPage.results.artist === 'undefined') {
+          console.log("boooo");
+          $artistResults.html("Unable to find: " + artistName);
+        } else {
+          console.info("success!!!!!", resp);
+          createArtistList(resp.resultsPage.results.artist);
+        };
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.error("NOOOO!!!!", jqXHR, textStatus, errorThrown);
