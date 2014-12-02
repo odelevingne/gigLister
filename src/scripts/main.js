@@ -5,6 +5,8 @@ $(document).ready(function(){
   var $searchArtistForm = $("#search-artist-form");
   var $searchArtistName = $("#search-artist-name");
   var $searchTerm = $("#search-term");
+  var $artistResults = $('#artist-results')
+  var $gigListing = $("#gig-listing")
 
   var searchSongKick = function(artistName) {
     $.ajax({
@@ -34,7 +36,7 @@ $(document).ready(function(){
       var artistId = bestMatches[i].id
       var renderedArtists = Mustache.render(artistTemplate, item);
 
-      $('#artist-results').append(renderedArtists);
+      $artistResults.append(renderedArtists);
     });
 
     $('.confirm-artist').on("click", function(event) {
@@ -67,7 +69,7 @@ $(document).ready(function(){
     var listingTemplate = "<li> <a href='{{uri}}'> {{displayName}} </a></li>" 
     $.each(listings, function(i, item){
       var renderedGigs = Mustache.render(listingTemplate, item);
-      $("#gig-listing").append(renderedGigs);
+      $gigListing.append(renderedGigs);
     });
   };
 
