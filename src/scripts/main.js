@@ -19,7 +19,7 @@ $(document).ready(function(){
       success: function(resp) {
         if (typeof resp.resultsPage.results.artist === 'undefined') {
           console.log("boooo");
-          $artistResults.html("Unable to find: " + artistName);
+          $artistResults.html("Unable to find: " + artistName + ". Please search again");
         } else {
           console.info("success!!!!!", resp);
           createArtistList(resp.resultsPage.results.artist);
@@ -85,7 +85,7 @@ $(document).ready(function(){
 
   $searchArtistForm.on("submit", function(event){
     event.preventDefault();
-
+    $artistResults.empty();
     var artistName = $searchArtistName.val();
     $searchTerm.html(artistName);
 
