@@ -60,8 +60,12 @@ $(document).ready(function(){
         apikey: SONG_KICK_API_KEY
       },
       success: function(resp) {
-        createArtistGigListings(resp.resultsPage.results.event);
-        $('#artist-results-div').fadeOut()
+        if (typeof resp.resultsPage.results.event === 'undefined') {
+          $gigListing.html(" Not currently touring")
+        } else {
+          createArtistGigListings(resp.resultsPage.results.event);
+          $('#artist-results-div').fadeOut();
+        }
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.error("Nooo!!", jqXHR, textStatus, errorThrown);
