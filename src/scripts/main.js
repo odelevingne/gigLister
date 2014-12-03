@@ -11,9 +11,9 @@ $(document).ready(function(){
   var $artistResultsDiv = $('#artist-results-div')
   var $gigListingDiv = $('#gig-listing-div')
 
-  $searchTermDiv.hide()
-  $artistResultsDiv.hide()
-  $gigListingDiv.hide()
+  $searchTermDiv.hide();
+  $artistResultsDiv.hide();
+  $gigListingDiv.hide();
 
   var searchSongKick = function(artistName) {
     $.ajax({
@@ -27,6 +27,7 @@ $(document).ready(function(){
         if (typeof resp.resultsPage.results.artist === 'undefined') {
           console.log("boooo");
           $artistResults.html("Unable to find: " + artistName + ". Please search again");
+          $artistResultsDiv.fadeIn(1500).show();
         } else {
           console.info("success!!!!!", resp);
           createArtistList(resp.resultsPage.results.artist);
@@ -69,10 +70,11 @@ $(document).ready(function(){
       },
       success: function(resp) {
         if (typeof resp.resultsPage.results.event === 'undefined') {
-          $gigListing.html(" Not currently touring")
+          $gigListing.html(" Not currently touring");
+          $gigListingDiv.fadeIn().show();
         } else {
           createArtistGigListings(resp.resultsPage.results.event);
-          $('#artist-results-div').fadeOut();
+          $artistResultsDiv.fadeOut();
         }
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -95,7 +97,8 @@ $(document).ready(function(){
   $searchArtistForm.on("submit", function(event){
     event.preventDefault();
     $artistResults.empty();
-
+    $gigListing.empty();
+    $gigListingDiv.hide();
     $searchTermDiv.fadeIn(1500).show()
 
     var artistName = $searchArtistName.val();
