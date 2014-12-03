@@ -9,9 +9,11 @@ $(document).ready(function(){
   var $gigListing = $("#gig-listing")
   var $searchTermDiv = $('#search-term-div')
   var $artistResultsDiv = $('#artist-results-div')
+  var $gigListingDiv = $('#gig-listing-div')
 
   $searchTermDiv.hide()
   $artistResultsDiv.hide()
+  $gigListingDiv.hide()
 
   var searchSongKick = function(artistName) {
     $.ajax({
@@ -85,6 +87,7 @@ $(document).ready(function(){
     $.each(listings, function(i, item){
       var renderedGigs = Mustache.render(listingTemplate, item);
       $gigListing.append(renderedGigs);
+      $gigListingDiv.fadeIn(1500).show()
     });
   };
 
