@@ -7,6 +7,11 @@ $(document).ready(function(){
   var $searchTerm = $("#search-term");
   var $artistResults = $('#artist-results')
   var $gigListing = $("#gig-listing")
+  var $searchTermDiv = $('#search-term-div')
+  var $artistResultsDiv = $('#artist-results-div')
+
+  $searchTermDiv.hide()
+  $artistResultsDiv.hide()
 
   var searchSongKick = function(artistName) {
     $.ajax({
@@ -42,6 +47,7 @@ $(document).ready(function(){
       var renderedArtists = Mustache.render(artistTemplate, item);
 
       $artistResults.append(renderedArtists);
+      $artistResultsDiv.fadeIn(2500).show()
     });
 
     $('.confirm-artist').on("click", function(event) {
@@ -86,9 +92,11 @@ $(document).ready(function(){
   $searchArtistForm.on("submit", function(event){
     event.preventDefault();
     $artistResults.empty();
+
+    $searchTermDiv.fadeIn(1500).show()
+
     var artistName = $searchArtistName.val();
     $searchTerm.html(artistName);
-
     console.info("Searched for", artistName);
 
     searchSongKick(artistName);
