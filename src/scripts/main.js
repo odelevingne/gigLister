@@ -2,9 +2,7 @@ $(document).ready(function(){
 
   // TODO: semi-colons on end of lines
 
-  var SONG_KICK_API_KEY = "8y5HTUEItSCdxL0v";
-
-  var $searchArtistForm = $("#search-artist-form");
+  var $searchArtistForm = $("#search-artist-form")
   var $searchArtistName = $("#search-artist-name");
   var $searchTerm = $("#search-term");
   var $artistResults = $('#artist-results').find('tbody');
@@ -18,30 +16,6 @@ $(document).ready(function(){
   $artistResultsDiv.hide();
   $gigListingDiv.hide();
 
-  var searchSongKick = function(artistName) {
-    $.ajax({
-      type: "GET",
-      url: "http://api.songkick.com/api/3.0/search/artists.json",
-      data: {
-        query: artistName,
-        apikey: SONG_KICK_API_KEY
-      },
-      success: function(resp) {
-        if (typeof resp.resultsPage.results.artist === 'undefined') {
-          console.log("boooo");
-          $artistResults.html("Unable to find: " + artistName + ". Please search again");
-          $artistResultsDiv.fadeIn(1500).show();
-        } else {
-          console.info("success!!!!!", resp);
-          createArtistList(resp.resultsPage.results.artist);
-        };
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.error("NOOOO!!!!", jqXHR, textStatus, errorThrown);
-        // Display an error
-      }
-    });
-  };
 
   var createArtistList = function(artists) {
     var bestMatches = artists.slice(0,5)
@@ -62,34 +36,26 @@ $(document).ready(function(){
       event.preventDefault();
       var $clickedArtist = $(event.currentTarget);
       var artistID = $clickedArtist.data('artist-id');
-      getArtistCalender(artistID);
+
+      songKickApi.getArtistCalender(artistID, {
+        success: function(resp) {
+          if (typeof resp.resultsPage.results.event === 'undefined') {
+            $gigListing.html(" Not currently touring");
+            $artistResultsDiv.fadeOut();
+            $gigListingDiv.fadeIn(3000).show();
+          } else {
+            createArtistGigListings(resp.resultsPage.results.event);
+            $artistResultsDiv.fadeOut();
+            console.log(resp.resultsPage.results);
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.error("Nooo!!", jqXHR, textStatus, errorThrown);
+          // Display an error
+        }
+      });
     });
   };
-
-  var getArtistCalender = function(artistID){
-    $.ajax({
-      type: 'GET',
-      url: "http://api.songkick.com/api/3.0/artists/"+artistID+"/calendar.json",
-      data: {
-        apikey: SONG_KICK_API_KEY
-      },
-      success: function(resp) {
-        if (typeof resp.resultsPage.results.event === 'undefined') {
-          $gigListing.html(" Not currently touring");
-          $artistResultsDiv.fadeOut();
-          $gigListingDiv.fadeIn(3000).show();
-        } else {
-          createArtistGigListings(resp.resultsPage.results.event);
-          $artistResultsDiv.fadeOut();
-          console.log(resp.resultsPage.results);
-        }
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.error("Nooo!!", jqXHR, textStatus, errorThrown);
-        // Display an error
-      }
-    });
-  }; 
 
   var createArtistGigListings = function(listings){
     // TODO: move this to index.html
@@ -113,9 +79,22 @@ $(document).ready(function(){
     $searchTerm.html(artistName);
     console.info("Searched for", artistName);
 
-    searchSongKick(artistName);
-    
+    songKickApi.searchArtist(artistName, {
+      success: function(resp) {
+        if (typeof resp.resultsPage.results.artist === 'undefined') {
+          console.log("boooo");
+          $artistResults.html("Unable to find: " + artistName + ". Please search again");
+          $artistResultsDiv.fadeIn(1500).show();
+        } else {
+          console.info("success!!!!!", resp);
+          createArtistList(resp.resultsPage.results.artist);
+        };
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.error("NOOOO!!!!", jqXHR, textStatus, errorThrown);
+        // Display an error
+      }
+    });
   });
-
 });
 
