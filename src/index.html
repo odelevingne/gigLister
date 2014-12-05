@@ -6,9 +6,7 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <!-- Place favicon.ico in the root directory -->
-
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" href="styles/main.css">
         <script src="bower_components/modernizr/modernizr.js"></script>
@@ -16,18 +14,13 @@
     </head>
     <body>
         <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-
         <!-- Add your site or application content here -->
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-2 col-md-offset-5">
+                <div class="col-sm-4 col-sm-offset-4">
                     <h1>Gig Lister</h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4 col-md-offset-4">
                     <form role="form" id="search-artist-form">
                         <div class="form-group">
                             <label for="search-artist-name"><h4>Search</h4></label>
@@ -35,37 +28,29 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
-                </div>
-            </div> 
-
-            <div class="row" id="search-term-div">
-                <div class="col-sm-4 col-md-offset-4">
-                    <br><p>You searched for: 
-                            <span id="search-term"></span>
+                    
+                    <div id="search-term-div">
+                        <br><p>You searched for:
+                        <span id="search-term"></span>
                         </p>
-                </div>
-            </div>
-            <div class="row" id="artist-results-div">
-                <div class="col-sm-4 col-md-offset-4">
-                    <h4>Possible results:</h4> 
-                    <table class="table table-hover" id="artist-results">
-                    </table>
-                </div>
-            </div>
-            <div class="row" id="gig-listing-div">
-                <div class="col-sm-4 col-md-offset-4">
-                    <h4>Catch them here:</h4>
-                    <table class="table table-hover" id="gig-listing">
-                    </table>
+                    </div>
+
+                    <div id="artist-results-div">
+                        <h4>Possible results:</h4>
+                        <table class="table table-hover" id="artist-results"></table>
+                    </div>
+
+                    <div id="gig-listing-div">
+                        <h4>Catch them here:</h4>
+                        <table class="table table-hover" id="gig-listing"></table>
+                    </div>
                 </div>
             </div>
         </div>
-
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="bower_components/jquery/dist/jquery.min.js"><\/script>')</script>
         <script src="scripts/plugins.js"></script>
         <script src="scripts/main.js"></script>
-
     </body>
 </html>

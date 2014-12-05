@@ -71,7 +71,8 @@ $(document).ready(function(){
       success: function(resp) {
         if (typeof resp.resultsPage.results.event === 'undefined') {
           $gigListing.html(" Not currently touring");
-          $gigListingDiv.fadeIn().show();
+          $artistResultsDiv.fadeOut();
+          $gigListingDiv.fadeIn(3000).show();
         } else {
           createArtistGigListings(resp.resultsPage.results.event);
           $artistResultsDiv.fadeOut();
