@@ -86,7 +86,7 @@ $(document).ready(function(){
   }; 
 
   var createArtistGigListings = function(listings){
-    var listingTemplate = "<li> <a href='{{uri}}'>{{venue.displayName}}</a> <span>{{location.city}} {{start.date}}</span> </li>"; 
+    var listingTemplate = "<tr> <td> <a href='{{uri}}'> {{venue.displayName}} </a></td> <td> {{location.city}} </td> <td> {{start.date}} </td></tr>";
     $.each(listings, function(i, item){
       var renderedGigs = Mustache.render(listingTemplate, item);
       $gigListing.append(renderedGigs);
