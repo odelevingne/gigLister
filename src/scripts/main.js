@@ -75,6 +75,7 @@ $(document).ready(function(){
         } else {
           createArtistGigListings(resp.resultsPage.results.event);
           $artistResultsDiv.fadeOut();
+          console.log(resp.resultsPage.results);
         }
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -85,14 +86,13 @@ $(document).ready(function(){
   }; 
 
   var createArtistGigListings = function(listings){
-    var listingTemplate = "<li> <a href='{{uri}}'> {{displayName}} </a></li>" 
+    var listingTemplate = "<li> <a href='{{uri}}'>{{venue.displayName}}</a> <span>{{location.city}} {{start.date}}</span> </li>"; 
     $.each(listings, function(i, item){
       var renderedGigs = Mustache.render(listingTemplate, item);
       $gigListing.append(renderedGigs);
-      $gigListingDiv.fadeIn(1500).show()
     });
+    $gigListingDiv.fadeIn(2500).show()
   };
-
 
   $searchArtistForm.on("submit", function(event){
     event.preventDefault();
