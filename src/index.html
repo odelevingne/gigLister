@@ -37,7 +37,16 @@
 
                     <div id="artist-results-div">
                         <h2 class="h4">Possible results:</h2>
-                        <table class="table table-hover" id="artist-results"></table>
+                        <table class="table table-hover" id="artist-results">
+                            <tbody id="tbody"></tbody>
+                        </table>
+                        <script id="artist-result-template" type="x-tmpl-mustache">
+                        <tr>
+                            <td>
+                                <a data-artist-id='{{id}}' class='confirm-artist'>{{displayName}}</a>
+                            </td>
+                        <tr>
+                        </script>
                     </div>
 
                     <div id="gig-listing-div">

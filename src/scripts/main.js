@@ -1,15 +1,18 @@
 $(document).ready(function(){
 
+  // TODO: semi-colons on end of lines
+
   var SONG_KICK_API_KEY = "8y5HTUEItSCdxL0v";
 
   var $searchArtistForm = $("#search-artist-form");
   var $searchArtistName = $("#search-artist-name");
   var $searchTerm = $("#search-term");
-  var $artistResults = $('#artist-results')
-  var $gigListing = $("#gig-listing")
-  var $searchTermDiv = $('#search-term-div')
-  var $artistResultsDiv = $('#artist-results-div')
-  var $gigListingDiv = $('#gig-listing-div')
+  var $artistResults = $('#artist-results').find('tbody');
+  var $gigListing = $("#gig-listing");
+  var $searchTermDiv = $('#search-term-div');
+  var $artistResultsDiv = $('#artist-results-div');
+  var $gigListingDiv = $('#gig-listing-div');
+  var $artistResultsTemplate = $('#artist-result-template');
 
   $searchTermDiv.hide();
   $artistResultsDiv.hide();
@@ -43,15 +46,17 @@ $(document).ready(function(){
   var createArtistList = function(artists) {
     var bestMatches = artists.slice(0,5)
 
-    var artistTemplate = "<tr> <td> <a data-artist-id='{{id}}' class='confirm-artist'> {{displayName}} </a> </td> <tr>";
+    var artistTemplate = $artistResultsTemplate.html();
+
+    var renderedArtists = '';
 
     $.each(bestMatches, function(i, item){
       var artistId = bestMatches[i].id
-      var renderedArtists = Mustache.render(artistTemplate, item);
-
-      $artistResults.append(renderedArtists);
-      $artistResultsDiv.fadeIn(2500).show()
+      renderedArtists += Mustache.render(artistTemplate, item);
     });
+
+    $artistResults.append(renderedArtists);
+    $artistResultsDiv.fadeIn(2500).show();
 
     $('.confirm-artist').on("click", function(event) {
       event.preventDefault();
@@ -87,12 +92,14 @@ $(document).ready(function(){
   }; 
 
   var createArtistGigListings = function(listings){
+    // TODO: move this to index.html
     var listingTemplate = "<tr> <td> <a href='{{uri}}'> {{venue.displayName}} </a></td> <td> {{location.city}} </td> <td> {{start.date}} </td></tr>";
     $.each(listings, function(i, item){
+      // TODO: only add once renders all results
       var renderedGigs = Mustache.render(listingTemplate, item);
       $gigListing.append(renderedGigs);
     });
-    $gigListingDiv.fadeIn(2500).show()
+    $gigListingDiv.fadeIn(2500).show();
   };
 
   $searchArtistForm.on("submit", function(event){
