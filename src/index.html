@@ -30,26 +30,29 @@
                 <div class="col-sm-12">
                     <form role="form" id="search-artist-form">
                         <div class="form-group">
-                            <label for="search-artist-name">Search</label>
+                            <label for="search-artist-name"><h4>Search</h4></label>
                             <input type="text" class="form-control" id="search-artist-name" placeholder="Artist Name">
                         </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div> 
+
             <div class="row" id="search-term-div">
                 <div class="col-sm-12">
-                    <p>You searched for: <span id="search-term"></span></p>
+                    <br><p>You searched for: <span id="search-term"></span></p>
                 </div>
             </div>
             <div class="row" id="artist-results-div">
                 <div class="col-sm-12">
-                    <p>Possible results: <span id="artist-results"></span></p>
+                    <h4>Possible results:</h4> 
+                    <table class="table table-hover" id="artist-results">
+                    </table>
                 </div>
             </div>
             <div class="row" id="gig-listing-div">
                 <div class="col-sm-12">
-                    <p>Catch them here:</p>
+                    <h4>Catch them here:</h4>
                     <table class="table table-hover" id="gig-listing">
                     </table>
                 </div>

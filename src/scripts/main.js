@@ -43,7 +43,7 @@ $(document).ready(function(){
   var createArtistList = function(artists) {
     var bestMatches = artists.slice(0,5)
 
-    var artistTemplate = "<li> <a data-artist-id='{{id}}' class='confirm-artist'> {{displayName}} </a> </li>";
+    var artistTemplate = "<tr> <td> <a data-artist-id='{{id}}' class='confirm-artist'> {{displayName}} </a> </td> <tr>";
 
     $.each(bestMatches, function(i, item){
       var artistId = bestMatches[i].id
