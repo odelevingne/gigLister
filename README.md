@@ -1,0 +1,1 @@
+A quick app to get to grips with Ajax requests through jQuery, implementing the Songkick API.

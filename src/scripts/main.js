@@ -1,4 +1,4 @@
-$(document).ready(function(){
+  $(document).ready(function(){
 
   // TODO: semi-colons on end of lines
 
