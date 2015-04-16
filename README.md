@@ -19,5 +19,14 @@ A simple website allowing you to search for a music artist that you want to see,
 |Mustahce                   |Templating                      |
 |Songkick API               |Getting artist information      |
 
+## How to use
+```
+> git clone https://github.com/odelevingne/gigLister
+> cd gigLister
+> npm install
+> bower install
+> httpster
+> visit http://localhost:3333
+```
 
 [Songkick]:https://www.songkick.com/
